@@ -5,8 +5,19 @@ const roleMiddleware = require("../middlewares/roleMiddleware");
 
 const router = express.Router();
 
-router.get("/", roleMiddleware("admin"), postController.listPosts);
+// Retrieve all Posts
+router.get("/", postController.listPosts);
 
-router.post("/", roleMiddleware("content_creator"), postController.createPost);
+// Create a New Post
+router.post("/", postController.createPost);
+
+// Retrieve a specific post by ID
+router.get("/:id", postController.getPostById);
+
+// Update an existing Post
+router.put("/:id", postController.editPost);
+
+// Delete a post by ID
+router.delete("/:id", postController.deletePost);
 
 module.exports = router;

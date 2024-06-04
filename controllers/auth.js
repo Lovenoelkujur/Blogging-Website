@@ -22,7 +22,7 @@ const signUp = async(req, res) => {
     // console.log("Hash:- ", passwordHash);
 
     // saving the data of new user in DB
-    const newUser = new userModel({...req.body, password : passwordHash});
+    const newUser = new userModel({...req.body, role : "USER", password : passwordHash});
     const newlyInsertedUser = await newUser.save();
     // console.log(newlyInsertedUser._id);
 
