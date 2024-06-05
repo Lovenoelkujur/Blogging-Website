@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+
 
 
 const authRoutes = require("./routes/auth");
@@ -10,8 +10,6 @@ const authMiddleware = require("./middlewares/auth");
 const PORT = 9000;
 
 const app = express();
-
-dotenv.config();
 
 // to get the body in json form
 app.use(express.json());

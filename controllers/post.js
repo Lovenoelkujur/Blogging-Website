@@ -3,7 +3,11 @@ const postsModel = require("../models/post");
   // Get list of All the Post
 const listPosts = async (req, res) => {
     
-  const postList = await postsModel.find();
+//   const postList = await postsModel.find().populate("userId");   // To get all data of user
+    const postList = await postsModel.find().populate({     // To get a specific Data of user
+        path : "userId",
+        select : "-_id name email role",
+    })
     // If all checkpoint Pass 
     res.status(200).json({
         success : true,
@@ -29,27 +33,62 @@ const createPost = async (req, res) => {
 
 // Get Post by ID
 const getPostById = async (req, res) => {
-    res.status(200).json({
-        success : true,
-        message : "Get post by ID API",
-        result : postList,
-    });
+    try {
+        const postId = req.params.id;
+        const postList = await postsModel.findById(postId).populate({
+            path : "userId",
+            select : "-_id name email role",
+        });
+    
+        res.status(200).json({
+            success : true,
+            message : "Get post by ID API",
+            result : postList,
+        });  
+    } 
+    catch (error) {
+        res.status(404).json({
+            success : false,
+            message : "ERROR ! Data Not Found"
+        })
+    }
 }
 
 // Edit Post by ID
 const editPost = async (req, res) => {
-    res.status(200).json({
-        success : true,
-        message : "Edit post by ID API",
-    });
+    try {
+        const postId = req.params.id;
+        await postsModel.findByIdAndUpdate(postId, req.body);
+    
+        res.status(200).json({
+            success : true,
+            message : "Post Updated Successfully.",
+        });  
+    } catch (error) {
+        res.status(404).json({
+            success : false,
+            message : "ERROR ! Data Not Found"
+        });
+    }
 }
 
 // Delete Post By ID
 const deletePost = async (req, res) => {
-    res.status(200).json({
-        success : true,
-        message : "Delete post by ID API",
-    });
+    try {
+        const postId = req.params.id;
+        await postsModel.findByIdAndDelete(postId);
+
+        res.status(200).json({
+            success : true,
+            message : "Post Delete Successfully",
+        });  
+    } 
+    catch (error) {
+        res.status(404).json({
+            success : false,
+            message : "ERROR ! Data Not Found"
+        });
+    }
 }
 
 const postController = {
