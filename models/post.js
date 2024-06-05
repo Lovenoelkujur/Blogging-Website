@@ -16,8 +16,8 @@ const postSchema = mongoose.Schema({
         default : [],
     },
     userId : {
-        type : mongoose.Types.ObjectId,
-        ref : "users",
+        type : mongoose.Types.ObjectId,     // Mongoose Id Type
+        ref : "users",      // Connection established between POST and USER.
     },
 },
 {

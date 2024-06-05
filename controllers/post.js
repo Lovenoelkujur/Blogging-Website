@@ -2,33 +2,57 @@ const postsModel = require("../models/post");
 
   // Get list of All the Post
 const listPosts = async (req, res) => {
+    try {
+        // Fetch Data through page no
+        let pageNo = req.query.pageNo || 1;     // Number of page displayed in page
+        let pageData = req.query.pageData || 10;        // Number of Data to  b fatched
+        pageNo = pageNo * 1;
+        pageData = pageData * 1;
+        // console.log(pageNo);
     
-//   const postList = await postsModel.find().populate("userId");   // To get all data of user
-    const postList = await postsModel.find().populate({     // To get a specific Data of user
-        path : "userId",
-        select : "-_id name email role",
-    })
-    // If all checkpoint Pass 
-    res.status(200).json({
-        success : true,
-        message : "Post-List API",
-        result : postList,
-    });
+        //   const postList = await postsModel.find().populate("userId");   // To get all data of user
+        const postList = await postsModel.find()
+        .skip((pageNo - 1) * 10)
+        .limit(pageData)      // Limit of Data to display
+        .populate({     // To get a specific Data of user (selected Data)
+            path : "userId",
+            select : "-_id name email role",
+        })
+        // If all checkpoint Pass 
+        res.status(200).json({
+            success : true,
+            message : "Post-List API",
+            result : postList,
+        });   
+    } 
+    catch (error) {
+        res.status(404).json({
+            success : false,
+            message : "ERROR ! Data Not Found"
+        })
+    }
     
 }
 
 // Create New Post
 const createPost = async (req, res) => {
-
-    // console.log(req.user._id);
-    // Save Post in DB
-    const newPost = postsModel({...req.body, userId : req.user._id});
-    await newPost.save();
-
-    res.status(200).json({
-        success : true,
-        message : "Post Created Successfully !",
-    })
+    try {
+        // console.log(req.user._id);
+        // Save Post in DB
+        const newPost = postsModel({...req.body, userId : req.user._id});
+        await newPost.save();
+    
+        res.status(200).json({
+            success : true,
+            message : "Post Created Successfully !",
+        })  
+    } 
+    catch (error) {
+        res.status(404).json({
+            success : false,
+            message : "ERROR ! Data Not Found"
+        })
+    }
 }
 
 // Get Post by ID
