@@ -294,6 +294,18 @@ Content-Type: application/json
 }
 ```
 
+## Dependecies
+
+```bash
+{
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.1"
+}
+```
+
 ## License
 
 This project is licensed under the MIT License.
