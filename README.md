@@ -2,58 +2,105 @@
 
 ## Overview
 
-This project is a simple blogging website backend implemented using Node.js, Express.js, and MongoDB. The application supports user authentication, creating and managing blog posts, and user authorization.
+This project is a simple blogging website built with Node.js, Express, and MongoDB. It allows users to sign up, log in, create posts, and comment on posts. The application uses JWT for authentication and authorization.
+
+## Images
+
+#### 1. `Sign-up API`
+
+![sign-up](./Images/Sign-up-API.png)
+
+#### 2. `Login API`
+
+![login](./Images/Login-API.png)
+
+#### 3. `Get Post List API`
+
+![get-post-list](./Images/Get-post-list-API.png)
+
+#### 4. `Create Post API`
+
+![create-post](./Images/Create-post-API.png)
+
+#### 5. `Get Post by ID API`
+
+![get-post-by-id](./Images/Get-post-by-ID-API.png)
+
+#### 6. `Update Post API`
+
+![update-post-API](./Images/Update-Post-API.png)
+
+#### 7. `Delete Post API`
+
+![delete-post-API](./Images/Delete-Post-API.png)
+
+#### 8. `Post Comment API`
+
+![post-comment-API](./Images/Post-Comment-API.png)
+
+#### 9. `Update Comment API`
+
+![update-comment-API](./Images/Update-Comment-API.png)
+
+#### 10. `Delete Comment API`
+
+![post-comment-API](./Images/Delete-Comment-API.png)
+
+#### 11. `USER Data`
+
+![user-data](./Images/DB-user.png)
+
+#### 12. `POST Data`
+
+![post-data](./Images/DB-Posts.png)
+
+#### 13. `Comment Data`
+
+![comment](./Images/DB-Comment.png)
 
 ## Features
 
-* User authentication (signup and login) with JWT.
+* `User Authentication`: Sign up and log in with email and password.
 
-* CRUD operations for blog posts.
+* `Authorization`: JWT-based authentication middleware.
 
-* Pagination support for listing posts.
+* `CRUD Operations for Posts`: Create, read, update, and delete posts.
 
-* Authorization middleware to restrict access to certain routes.
+* `Comment on Posts`: Users can comment on posts, update their comments, and delete their comments.
 
-## Prerequisites
+* `Pagination`: List posts with pagination support.
 
-* `Node.js` (v12.x or higher)
+* `Role-Based Access Control`: Different roles for users (e.g., Admin, User, Content-Creater).
 
-* `MongoDB` (running locally or on a cloud service)
+## Installation
 
-* `npm` (Node package manager)
-
-## Getting Started
-
-### Clone the Repository
+1. Clone the Repository:
 
 ```bash
 git clone https://github.com/Lovenoelkujur/Blogging-Website.git
-cd blogging-website
 ```
-
-### Install Dependencies
+2. Install Dependencies
 
 ```bash
 npm install
 ```
-
-### Environment Variables
-
+3. Environment Variables:
 Create a `.env` file in the root directory and add the following:
 
-```makefile
+```env
 SECRET_KEY=your_jwt_secret_key
 ```
 
-### Running the Server
+4. Run the Application:
 
 ```bash
 npm start
 ```
 
-The server will start on `http://localhost:9000`.
+5. Access the Application:
+Open your browser and go to `http://localhost:9000`.
 
-### Project Structure
+## Project Structure
 
 ```bash
 .
@@ -70,105 +117,181 @@ The server will start on `http://localhost:9000`.
 │   ├── auth.js
 │   └── post.js
 ├── .env
-├── app.js
 ├── package.json
+├── server.js
 └── README.md
 ```
 
-### Troubleshooting
+## 1. `controllers/auth.js`
 
-#### Common Issues
+Handles user authentication:
 
-* `MongoDB Connection Error`: Ensure MongoDB is running and the connection string is correct.
+* `signUp`: Registers a new user with a hashed password.
 
-* `JWT Errors`: Verify that the SECRET_KEY is correctly set in the environment variables.
+* `login`: Authenticates a user and returns a JWT token.
 
-* `Permission Errors`: Ensure you are sending the correct JWT token in the authorization header for protected routes.
+## 2. `controllers/post.js`
 
-### Testing
+Handles CRUD operations for posts and comments:
 
-#### Manual Testing
+* `listPosts`: Lists posts with pagination.
 
-You can test the API endpoints using tools like `Postman` or `Insomnia`.
+* `createPost`: Creates a new post.
 
-### API Endpoints
+* `getPostById`: Retrieves a post by ID.
 
-#### Authentication
+* `editPost`: Updates a post by ID.
 
-* POST `/api/v1/signup` - User registration
+* `deletePost`: Deletes a post by ID.
 
-* POST `/api/v1/login` - User login
+* `postComment`: Adds a comment to a post.
 
-#### Posts
+* `updateComment`: Updates a comment on a post.
 
-* GET `/api/v1/posts` - Retrieve all posts (with pagination)
+* `deleteComment`: Deletes a comment on a post.
 
-* POST `/api/v1/posts` - Create a new post
+## 3. middlewares/auth.js
 
-* GET `/api/v1/posts/:id` - Retrieve a specific post by ID
+JWT-based authentication middleware:
 
-* PUT `/api/v1/posts/:id` - Update a specific post by ID
+* `validateUser`: Validates the JWT token and user ID.
 
-* DELETE `/api/v1/posts/:id` - Delete a specific post by ID
+## 4. `middlewares/roleMiddleware.js
 
-### Middleware
+Role-based access control middleware:
 
-#### Auth Middleware (`auth.js`)
+* `roleMiddleware`: Validates the user's role.`
 
-This middleware validates the JWT token and ensures that the user is authenticated.
+## 5. `models/auth.js
 
-#### Role Middleware (`roleMiddleware.js`)
+User model schema:
 
-This middleware checks if the user has the required role to access a specific route.
+* `name`: User's name.
 
-### Models
+* `email`: User's email (unique).
 
-#### User Model (`auth.js`)
+* `password`: User's hashed password.
 
-Defines the schema for user data, including fields for name, email, password, and role.
+* `role`: User's role.`
 
-#### Post Model (`post.js`)
+## 6. `models/post.js`
 
-Defines the schema for blog posts, including fields for title, body, tags, and userId.
+Post model schema:
 
-### Controllers
+* `title`: Post title.
 
-#### Auth Controller (`auth.js`)
+* `body`: Post content.
 
-Handles user signup and login functionality, including password hashing and JWT token generation.
+* `tags`: Post tags (optional).
 
-#### Post Controller (`post.js`)
+* `userId`: Reference to the user who created the post.
 
-Handles CRUD operations for blog posts, including pagination support for listing posts.
+* `comments`: Array of comments with user references and content.
 
-## Example Requests
+## 7. `routes/auth.js`
 
-### Signup
-```bash
-curl -X POST http://localhost:9000/api/v1/signup -H "Content-Type: application/json" -d '{
+Auth routes:
+
+* POST `/signup`: User registration.
+
+* POST `/login`: User login.
+
+## 8. `routes/post.js`
+
+Post routes:
+
+* `GET /`: List all posts.
+
+* `POST /`: Create a new post.
+
+* `GET /`
+: Get a post by ID.
+
+* `PUT /`
+: Update a post by ID.
+
+* `DELETE /`
+: Delete a post by ID.
+
+* `POST /comments/`
+: Add a comment to a post.
+
+* `PUT /comments/
+/`
+: Update a comment on a post.
+
+* `DELETE /comments/
+/`
+: Delete a comment on a post.
+
+## Usage
+
+### Registration
+
+To register a new user:
+
+```sh
+POST /api/v1/signup
+Content-Type: application/json
+
+{
     "name": "John Doe",
-    "email": "john@example.com",
-    "password": "password123"
-}'
+    "email": "john.doe@example.com",
+    "password": "your_password"
+}
 ```
 
 ### Login
 
-```bash
-curl -X POST http://localhost:9000/api/v1/login -H "Content-Type: application/json" -d '{
-    "email": "john@example.com",
-    "password": "password123"
-}'
+To log in as a user:
+
+```sh
+POST /api/v1/login
+Content-Type: application/json
+
+{
+    "email": "john.doe@example.com",
+    "password": "your_password"
+}
 ```
 
-### Create Post
+### Creating a Post
 
-```bash
-curl -X POST http://localhost:9000/api/v1/posts -H "Content-Type: application/json" -H "Authorization: Bearer YOUR_JWT_TOKEN" -d '{
-    "title": "My First Blog Post",
-    "body": "This is the content of the blog post.",
+To create a new post:
+
+```sh
+POST /api/v1/posts
+Authorization: Bearer <your_jwt_token>
+Content-Type: application/json
+
+{
+    "title": "My First Post",
+    "body": "This is the content of the post",
     "tags": ["tag1", "tag2"]
-}'
+}
+```
+
+### Listing Posts
+
+To list posts:
+
+```sh
+GET /api/v1/posts?pageNo=1&pageData=10
+Authorization: Bearer <your_jwt_token>
+```
+
+### Commenting on a Post
+
+To comment on a post:
+
+```sh
+POST /api/v1/posts/comments/<postId>
+Authorization: Bearer <your_jwt_token>
+Content-Type: application/json
+
+{
+    "comment": "This is a comment."
+}
 ```
 
 ## License
