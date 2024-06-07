@@ -19,6 +19,21 @@ const postSchema = mongoose.Schema({
         type : mongoose.Types.ObjectId,     // Mongoose Id Type
         ref : "users",      // Connection established between POST and USER.
     },
+    comments : [        // Comment Schema (Array Object Type)
+        {
+            
+            userId : {
+                type :mongoose.Types.ObjectId,
+            },
+            date : {
+                type : Date,
+                default : new Date(),
+            },
+            comment : {
+                type : String,
+            },
+        },
+    ],
 },
 {
     timestamps : true,

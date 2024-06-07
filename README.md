@@ -16,11 +16,11 @@ This project is a simple blogging website backend implemented using Node.js, Exp
 
 ## Prerequisites
 
-* Node.js (v12.x or higher)
+* `Node.js` (v12.x or higher)
 
-* MongoDB (running locally or on a cloud service)
+* `MongoDB` (running locally or on a cloud service)
 
-* npm (Node package manager)
+* `npm` (Node package manager)
 
 ## Getting Started
 

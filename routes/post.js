@@ -20,4 +20,16 @@ router.put("/:id", postController.editPost);
 // Delete a post by ID
 router.delete("/:id", postController.deletePost);
 
+//  ##------ Commenting Route. ------##
+
+// Post Comment by Id
+router.post("/comments/:postId", postController.postComment);
+
+// Update Comment by postId & commentId
+router.put("/comments/:postId/:commentId", postController.updateComment);
+
+// Delete Comment by postId & commentId
+router.delete("/comments/:postId/:commentId", postController.deleteComment);
+
+
 module.exports = router;

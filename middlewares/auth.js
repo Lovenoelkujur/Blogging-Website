@@ -54,7 +54,7 @@ const validateUser = async (req, res, next) => {
             message : "Unauthenticated User",
         });
     }
-    // Passing the data
+    // Passing the data (sending User ID)
     req.user = user;
     
     next();
