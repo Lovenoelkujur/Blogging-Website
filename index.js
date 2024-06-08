@@ -1,19 +1,21 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 
 const authRoutes = require("./routes/auth");
 const postRoutes = require("./routes/post");
 const authMiddleware = require("./middlewares/auth");
 
-const PORT = 9000;
+const PORT = 10000;
 
 const app = express();
+dotenv.config();
 
 // to get the body in json form
 app.use(express.json());
 
 // Connection with DB(MongoDB)
-mongoose.connect("mongodb://localhost:27017/authapp")
+mongoose.connect(process.env.DB_CONNECTION_URL)
 .then(() => {
     console.log("DB Connection Succesfully !");
 })
