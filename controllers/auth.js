@@ -28,7 +28,7 @@ const signUp = async(req, res) => {
     
         res.status(201).json({
             success : true,
-            message : "Registration Successfully, Please Login."
+            message : "Registration Successfully, Please Login.",
         })
         
     } 
